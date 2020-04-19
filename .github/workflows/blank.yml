@@ -34,3 +34,8 @@ jobs:
         
     - name: teste dotnet
       run: dotnet --list-sdks
+    - name: Install dotnet SonarScanner a test
+      run: |
+        dotnet tool install dotnet-sonarscanner --tool-path . --version 4.7.1
+        dotnet-sonarscanner begin
+    
