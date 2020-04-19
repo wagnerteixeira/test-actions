@@ -37,5 +37,9 @@ jobs:
     - name: Install dotnet SonarScanner a test
       run: |
         dotnet tool install dotnet-sonarscanner --tool-path . --version 4.7.1
-        dotnet-sonarscanner begin
+        ls
+        ./dotnet-sonarscanner begin
+        ./dotnet-sonarscanner begin /k:"wagnerteixeira_test-actions" /n:"Test Actions" /o:"wagnerteixeira" /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.host.url=https://sonarcloud.io /d:sonar.cs.opencover.reportsPaths="./tests/TestResults/coverage.opencover.xml" /d:sonar.cs.vstest.reportsPaths="./tests/TestResults/*.trx"
+        dotnet test --configuration Release /p:CollectCoverage=true /p:CoverletOutput=../TestResults/ /p:CoverletOutputFormat=\"opencover,lcov\" /p:Exclude="[TestActions.Tests*]*" --logger trx --results-directory ./tests/TestResults/
+        ./dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
     
