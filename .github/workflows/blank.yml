@@ -33,6 +33,13 @@ jobs:
       - name: Test
         run: echo "${BRANCH_NAME}"
 
+      - name: Extract tag name
+        shell: bash
+        run: echo "::set-env name=TAG_NAME::$(if ${BRANCH_NAME} eq master echo latest else echo dev fi)"
+
+      - name: Test
+        run: echo "${TAG_NAME}"
+
       - name: Extract branch name 2
         shell: bash
         run: echo "::set-env name=BRANCH_NAME2::$(echo ${{ github.ref }} | sed 's/refs\/heads\///g')"
