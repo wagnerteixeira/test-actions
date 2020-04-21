@@ -42,7 +42,7 @@ jobs:
 
       - name: Extract branch name 3
         shell: bash
-        run: echo "::set-env name=BRANCH_NAME3::$(echo ${{ github.ref#refs/heads/ }} | sed 's/\//_/g')"
+        run: echo "::set-env name=BRANCH_NAME3::$(echo ${{ github.ref }} | sed 's/\//_/g')"
 
       - name: Test
         run: echo "${BRANCH_NAME3}"
