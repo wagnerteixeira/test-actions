@@ -32,27 +32,19 @@ jobs:
 
       - name: Test
         run: echo "${BRANCH_NAME}"
-
-      - name: Extract tag name
+      
+      - name: Setup name of tag with latest
+        if: contains(github.ref, 'master')
         shell: bash
-        run: echo "::set-env name=TAG_NAME::$(if ${BRANCH_NAME} eq master echo latest else echo dev fi)"
-
-      - name: Test
+        run: echo "::set-env name=TAG_NAME::latest"
+        
+      - name: Setup name of tag with dev
+        if: contains(github.ref, 'master') == false
+        shell: bash
+        run: echo "::set-env name=TAG_NAME::dev"
+      
+      - name: Test Tag Name
         run: echo "${TAG_NAME}"
-
-      - name: Extract branch name 2
-        shell: bash
-        run: echo "::set-env name=BRANCH_NAME2::$(echo ${{ github.ref }} | sed 's/refs\/heads\///g')"
-
-      - name: Test
-        run: echo "${BRANCH_NAME2}"
-
-      - name: Extract branch name 3
-        shell: bash
-        run: echo "::set-env name=BRANCH_NAME3::$(echo ${{ github.ref }} | sed 's/\//_/g')"
-
-      - name: Test
-        run: echo "${BRANCH_NAME3}"
 
       - name: Inspect contexts
         run: |
