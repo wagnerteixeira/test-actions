@@ -24,7 +24,28 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo Hello, world!
+        run: echo ${GITHUB_REF}
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//_/g')"
+
+      - name: Test
+        run: echo "${BRANCH_NAME}"
+
+      - name: Extract branch name 2
+        shell: bash
+        run: echo "::set-env name=BRANCH_NAME2::$(echo ${{ github.ref }} | sed 's/refs\/heads\///g')"
+
+      - name: Test
+        run: echo "${BRANCH_NAME2}"
+
+      - name: Extract branch name 3
+        shell: bash
+        run: echo "::set-env name=BRANCH_NAME3::$(echo ${{ github.ref#refs/heads/ }} | sed 's/\//_/g')"
+
+      - name: Test
+        run: echo "${BRANCH_NAME3}"
 
       - name: Inspect contexts
         run: |
